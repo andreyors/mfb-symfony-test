@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}List - Url Shortener{% endblock %}
+{% block body %}
+    <h1>All shortcuts</h1>
+    <ul>
+        {% for item in list %}
+            <li>
+                <a href="/r/{{ item.slug }}">{{ app.request.scheme ~ '://' ~ app.request.host ~ ':' ~ app.request.port }}/r/{{ item.slug }}</a><br />
+                <span>{{ item.url }}</span> ({{ item.clicks }} clicks)
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
