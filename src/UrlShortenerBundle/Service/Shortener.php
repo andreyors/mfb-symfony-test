@@ -66,7 +66,7 @@ class Shortener
      * @param UrlShortcut $urlShortcut
      * @return string
      */
-    public function add(UrlShortcut $urlShortcut)
+    public function registerShortcut(UrlShortcut $urlShortcut)
     {
         $url = strtolower(trim($urlShortcut->getUrl()));
         if (!$this->isExists($url)) {

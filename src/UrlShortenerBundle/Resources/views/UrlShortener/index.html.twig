@@ -3,5 +3,14 @@
 {% block title %}Main - URL Shortener{% endblock %}
 {% block body %}
     <h1>URL Shortener</h1>
+    {% if slug is not empty %}
+        <p style="background-color: #eee">
+            <h2>Your shortcut</h2>
+            <span style="font-weight: bold">{{ app.request.scheme ~ '://' ~ app.request.host ~ ':' ~ app.request.port }}/r/{{ slug }}</span> <a href="/r/{{ slug }}">Visit</a>
+        </p>
+    {% endif %}
+
     {{ form(form) }}
+
+    <a href="/r/list">See full list</a>
 {% endblock %}

@@ -2,7 +2,5 @@
 
 {% block title %}Result - URL Shortener{% endblock %}
 {% block body %}
-    <h1>Your shortcut</h1>
-    Your URL is <span style="font-weight: bold">{{ app.request.scheme ~ '://' ~ app.request.host ~ ':' ~ app.request.port }}/r/{{ slug }}</span><br />
-    <a href="/r/{{ slug }}">Visit</a>
+
 {% endblock %}

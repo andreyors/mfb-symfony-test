@@ -1,4 +1,4 @@
 services:
   url_shortener.shortener:
     class: UrlShortenerBundle\Service\Shortener
-    arguments: ["@Doctrine"]
+    arguments: ["@doctrine"]

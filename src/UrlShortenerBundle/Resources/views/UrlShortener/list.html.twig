@@ -3,12 +3,18 @@
 {% block title %}List - Url Shortener{% endblock %}
 {% block body %}
     <h1>All shortcuts</h1>
-    <ul>
-        {% for item in list %}
-            <li>
-                <a href="/r/{{ item.slug }}">{{ app.request.scheme ~ '://' ~ app.request.host ~ ':' ~ app.request.port }}/r/{{ item.slug }}</a><br />
-                <span>{{ item.url }}</span> ({{ item.clicks }} clicks)
-            </li>
-        {% endfor %}
-    </ul>
+    {% if list is empty %}
+        No shortcuts found. <a href="/r/">Add new</a>?
+    {% else %}
+        <ul class="links">
+            {% for item in list %}
+                <li>
+                    <a href="/r/{{ item.slug }}">{{ app.request.scheme ~ '://' ~ app.request.host ~ ':' ~ app.request.port }}/r/{{ item.slug }}</a><br/>
+                    <span style="color: #999">{{ item.url }}</span> ({{ item.clicks }} clicks)
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <a href="/r">Add new</a>
 {% endblock %}

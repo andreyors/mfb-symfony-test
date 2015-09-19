@@ -6,8 +6,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use UrlShortenerBundle\Entity\UrlShortcut;
 use UrlShortenerBundle\Form\Type\createUrlShortcutType;
+use UrlShortenerBundle\Service\Shortener;
 
 class UrlShortenerController extends Controller
 {
@@ -21,31 +23,15 @@ class UrlShortenerController extends Controller
         $form = $this->createForm(new createUrlShortcutType(), $urlShortcut);
 
         $form->handleRequest($request);
+
+        $slug = "";
         if ($form->isValid()) {
             $data = $form->getData();
 
-            $slug = $this->getService()->add($data);
-
-            if (!empty($slug)) {
-                return $this->redirect('/r/view/' . $slug);
-            }
+            $slug = $this->getService()->registerShortcut($data);
         }
 
-        return $this->render('UrlShortenerBundle:UrlShortener:index.html.twig', ['form' => $form->createView()]);
-    }
-
-    /**
-     * @Route("/r/view/{slug}", name="us_view")
-     * @Template()
-     */
-    public function viewAction(Request $request)
-    {
-        $slug = $request->get('slug');
-        if (!$this->getService()->isSlugExists($slug)) {
-            die('Wrong Key');
-        }
-
-        return $this->render('UrlShortenerBundle:UrlShortener:view.html.twig', ['slug' => $slug]);
+        return $this->render('UrlShortenerBundle:UrlShortener:index.html.twig', ['form' => $form->createView(), 'slug' => $slug]);
     }
 
     /**
@@ -65,7 +51,7 @@ class UrlShortenerController extends Controller
     public function redirectAction(Request $request)
     {
         $slug = $request->get('slug');
-        if (!empty($slug)) {
+        if (isset($slug) && $this->getService()->isSlugExists($slug)) {
             $urlShortcut = $this->getService()->getUrl($slug);
             $url = $urlShortcut ? $urlShortcut->getUrl() : null;
             if (!empty($url)) {
@@ -75,11 +61,11 @@ class UrlShortenerController extends Controller
             }
         }
 
-        die('Wrong Key');
+        return new Response('Wrong key');
     }
 
     /**
-     * @return object
+     * @return Shortener
      */
     private function getService()
     {
