@@ -5,15 +5,13 @@ namespace UrlShortenerBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * UrlShortcut
- *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="UrlShortenerBundle\Entity\UrlShortcutRepository")
  */
 class UrlShortcut
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -43,7 +41,7 @@ class UrlShortcut
     private $createdAt;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="clicks", type="integer")
      */
@@ -51,9 +49,7 @@ class UrlShortcut
 
 
     /**
-     * Get id
-     *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -61,11 +57,9 @@ class UrlShortcut
     }
 
     /**
-     * Set slug
-     *
      * @param string $slug
      *
-     * @return UrlShortcut
+     * @return $this
      */
     public function setSlug($slug)
     {
@@ -75,8 +69,6 @@ class UrlShortcut
     }
 
     /**
-     * Get slug
-     *
      * @return string
      */
     public function getSlug()
@@ -85,11 +77,9 @@ class UrlShortcut
     }
 
     /**
-     * Set url
-     *
      * @param string $url
      *
-     * @return UrlShortcut
+     * @return $this
      */
     public function setUrl($url)
     {
@@ -99,8 +89,6 @@ class UrlShortcut
     }
 
     /**
-     * Get url
-     *
      * @return string
      */
     public function getUrl()
@@ -109,11 +97,9 @@ class UrlShortcut
     }
 
     /**
-     * Set createdAt
-     *
      * @param \DateTime $createdAt
      *
-     * @return UrlShortcut
+     * @return $this
      */
     public function setCreatedAt($createdAt)
     {
@@ -123,8 +109,6 @@ class UrlShortcut
     }
 
     /**
-     * Get createdAt
-     *
      * @return \DateTime
      */
     public function getCreatedAt()
@@ -133,11 +117,9 @@ class UrlShortcut
     }
 
     /**
-     * Set clicks
+     * @param int $clicks
      *
-     * @param integer $clicks
-     *
-     * @return UrlShortcut
+     * @return $this
      */
     public function setClicks($clicks)
     {
@@ -147,9 +129,7 @@ class UrlShortcut
     }
 
     /**
-     * Get clicks
-     *
-     * @return integer
+     * @return int
      */
     public function getClicks()
     {
