@@ -21,9 +21,7 @@ class ShortenerTest extends TestCase
             ->method('getRepository')
             ->will($this->returnValue($this->repository));
 
-
         $this->shortener = new Shortener($this->om);
-
     }
 
     public function testShouldReturnCorrectDataForSlugFunctions()
