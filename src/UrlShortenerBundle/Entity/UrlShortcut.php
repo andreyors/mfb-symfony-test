@@ -47,7 +47,6 @@ class UrlShortcut
      */
     private $clicks;
 
-
     /**
      * @return int
      */
