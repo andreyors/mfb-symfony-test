@@ -19,19 +19,21 @@ class UrlShortenerController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $urlShortcut = new UrlShortcut();
-        $form = $this->createForm(new createUrlShortcutType(), $urlShortcut);
-
+        $form = $this->createForm(new createUrlShortcutType(), new UrlShortcut());
         $form->handleRequest($request);
 
-        $slug = "";
+        $slug = null;
         if ($form->isValid()) {
             $data = $form->getData();
 
-            $slug = $this->getService()->registerShortcut($data);
+            $slug = $this->getShortenerService()
+                ->registerShortcut($data);
         }
 
-        return $this->render('UrlShortenerBundle:UrlShortener:index.html.twig', ['form' => $form->createView(), 'slug' => $slug]);
+        return [
+            'form' => $form->createView(), 
+            'slug' => $slug
+        ];
     }
 
     /**
@@ -40,9 +42,12 @@ class UrlShortenerController extends Controller
      */
     public function listAction(Request $request)
     {
-        $list = $this->getService()->getList();
+        $list = $this->getShortenerService()
+            ->getList();
 
-        return $this->render('UrlShortenerBundle:UrlShortener:list.html.twig', ['list' => $list]);
+        return [
+            'list' => $list
+        ];
     }
 
     /**
@@ -51,8 +56,15 @@ class UrlShortenerController extends Controller
     public function redirectAction(Request $request)
     {
         $slug = $request->get('slug');
-        if (isset($slug) && $this->getService()->isSlugExists($slug)) {
-            $urlShortcut = $this->getService()->getUrl($slug);
+        
+        if (
+            isset($slug) 
+            && $this->getShortenerService()
+                ->isSlugExists($slug)
+        ) {
+            $urlShortcut = $this->getShortenerService()
+                ->getUrl($slug);
+                
             $url = $urlShortcut ? $urlShortcut->getUrl() : null;
             if (!empty($url)) {
                 $this->getService()->touch($slug);
@@ -67,10 +79,9 @@ class UrlShortenerController extends Controller
     /**
      * @return Shortener
      */
-    private function getService()
+    private function getShortenerService()
     {
         return $this->get('url_shortener.shortener');
     }
-
 
 }
