@@ -1,0 +1,14 @@
+version: 2
+updates:
+- package-ecosystem: composer
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: twig/twig
+    versions:
+    - 1.42.2
+  - dependency-name: swiftmailer/swiftmailer
+    versions:
+    - 5.4.12
